@@ -606,86 +606,8 @@ shot(sCore, { d: 1220, dur: 2900, dwell: 6000 });
    ================================================================ */
 var CH2 = 'الأدوار والصلاحيات';
 
-function gateHTML(icon, name, title, lines, tx, tz, ry, i) {
-  return '<div class="gate3 st zoom" style="--i:' + i + ';position:absolute;left:50%;top:50%;' +
-         'margin:-260px 0 0 -170px;transform:translate3d(' + tx + 'px,0,' + tz + 'px) rotateY(' + ry + 'deg)">' +
-           '<div class="halo"></div>' +
-           '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">' + icon + '</svg>' +
-           '<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;letter-spacing:.2em;color:var(--faint);margin-bottom:8px">' + name + '</div>' +
-           '<h3>' + title + '</h3><p>' + lines + '</p>' +
-         '</div>';
-}
-var ICO_DOC = '<path d="M12 3a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V7a4 4 0 0 1 4-4z"/><path d="M5 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/>';
-var ICO_NUR = '<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M12 8v6M9 11h6"/>';
-var ICO_REC = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h5M7 14h8"/>';
-
-var sGates = scene({
-  ch: CH2, w: 1600, h: 620, cls: 'bare', adv: 2000, turn: 22,
-  html:
-    '<div style="position:absolute;inset:0;transform-style:preserve-3d">' +
-      gateHTML(ICO_DOC, 'DOCTOR', 'الطبيب', 'صاحب القرار السريري', 520, -180, -22, 1) +
-      gateHTML(ICO_NUR, 'NURSE', 'الممرضة', 'مسؤولة الجولة التمريضية', 0, 0, 0, 2) +
-      gateHTML(ICO_REC, 'RECEPTION', 'موظف الاستقبال', 'مسؤول التسجيل والتنسيق', -520, -180, 22, 3) +
-    '</div>'
-});
-shot(sGates, { d: 1750, dur: 3400, dwell: 4200 });
-shot(sGates, { d: 760, ox: 520, oz: -180, yaw: -22, dur: 2600, dwell: 3000 });
-
-var sDoc = scene({
-  ch: CH2, w: 1180, h: 520, adv: 1450, turn: -26, side: 260,
-  html:
-    kick('الدور الأول') +
-    '<h2 class="t sm st" style="--i:1">الطبيب</h2>' +
-    '<p class="lede st" style="--i:2;font-size:16px;margin-top:10px">في نهاية الجولة يجلس أمام الشاشة ليقرّر: هل تحسّن؟ هل ننتظر؟ هل نتدخّل الآن؟ القرار قراره وحده، والنظام يعامله على هذا الأساس.</p>' +
-    '<div class="grid g2 st" style="--i:3;margin-top:22px">' +
-      '<div class="tile cy"><h3>ما ينفرد به وحده</h3><ul class="bul" style="margin-top:10px">' +
-        '<li><b>اعتماد حالة المريض:</b> مستقرة، تحتاج متابعة، حرجة.</li>' +
-        '<li><b>حذف قراءة</b> من السجل نهائيًا.</li>' +
-        '<li><b>صفحة التقارير،</b> ولا يفتحها أحد سواه.</li></ul></div>' +
-      '<div class="tile"><h3>وما يشاركه فيه الطاقم الطبي</h3><ul class="bul" style="margin-top:10px">' +
-        '<li>تسجيل القراءات وكتابة الملاحظات الطبية.</li>' +
-        '<li>متابعة الحالات الحرجة ومن يحتاج مراجعة.</li></ul>' +
-        '<div class="chips" style="margin-top:14px">' + chipset(['الشاشات الست كلها']) + '</div></div>' +
-    '</div>'
-});
-shot(sDoc, { d: 1120, dur: 2800, dwell: 5400 });
-
-var sNur = scene({
-  ch: CH2, w: 1180, h: 520, adv: 1350, turn: 18,
-  html:
-    kick('الدور الثاني') +
-    '<h2 class="t sm st" style="--i:1">الممرضة</h2>' +
-    '<p class="lede st" style="--i:2;font-size:16px;margin-top:10px">تمرّ على الأسرّة سريرًا سريرًا: تقيس، وتكتب، وتنتبه. وما تسجّله في دقيقة واحدة قد يغيّر قرار الطبيب في المساء.</p>' +
-    '<div class="grid g2 st" style="--i:3;margin-top:22px">' +
-      '<div class="tile cy"><h3>ما تقوم به</h3><ul class="bul" style="margin-top:10px">' +
-        '<li><b>تسجيل القراءات:</b> النبض والضغط والأكسجين.</li>' +
-        '<li><b>تعديل ما سجّلته هي بنفسها</b> دون قراءات زملائها.</li>' +
-        '<li><b>الملاحظات التمريضية</b> على ملف المريض.</li></ul></div>' +
-      '<div class="tile red"><h3>وما لا تقوم به</h3><ul class="bul no" style="margin-top:10px">' +
-        '<li>لا تعتمد حالة مريض.</li><li>لا تحذف قراءة، ولا حتى قراءتها هي.</li><li>لا تفتح صفحة التقارير.</li></ul></div>' +
-    '</div>'
-});
-shot(sNur, { d: 1120, dur: 2700, dwell: 5200 });
-
-var sRec = scene({
-  ch: CH2, w: 1180, h: 520, adv: 1350, turn: -16,
-  html:
-    kick('الدور الثالث') +
-    '<h2 class="t sm st" style="--i:1">موظف الاستقبال</h2>' +
-    '<p class="lede st" style="--i:2;font-size:16px;margin-top:10px">أول وجه يراه المريض وآخر من يودّعه. يعرف اسمه ورقم هاتفه وموعده القادم، ولا يحتاج أن يعرف تشخيصه. ولذلك لا يصله.</p>' +
-    '<div class="grid g2 st" style="--i:3;margin-top:22px">' +
-      '<div class="tile cy"><h3>ما ينفرد به</h3><ul class="bul" style="margin-top:10px">' +
-        '<li><b>تسجيل مريض جديد،</b> ولا يفعلها الطبيب ولا الممرضة.</li>' +
-        '<li><b>تنسيق المواعيد</b> إضافةً وتعديلًا وحذفًا.</li></ul>' +
-        '<p style="margin-top:14px;font-size:14.5px;color:var(--dim)">المريض الذي يسجّله يبدأ بحالة <b style="color:var(--amber)">«بانتظار التشخيص»</b> حتى يراه الطبيب.</p></div>' +
-      '<div class="tile red"><h3>وما لا يصل إليه</h3><ul class="bul no" style="margin-top:10px">' +
-        '<li>لا تشخيص ولا فصيلة دم.</li><li>لا حالة مريض ولا قراءات.</li><li>لا ملاحظات طبية ولا تمريضية.</li></ul></div>' +
-    '</div>'
-});
-shot(sRec, { d: 1120, dur: 2700, dwell: 5200 });
-
 var sMatrix = scene({
-  ch: CH2, w: 1240, h: 660, adv: 1500, turn: 14,
+  ch: CH2, w: 1240, h: 660, adv: 1900, turn: 24,
   html:
     kick('باختصار') +
     '<h2 class="t sm st" style="--i:1;margin-bottom:22px">من يستطيع أن يفعل ماذا</h2>' +
@@ -702,107 +624,7 @@ var sMatrix = scene({
       '<tr><th>فتح صفحة التقارير</th><td class="y">✓</td><td class="n">✕</td><td class="n">✕</td></tr>' +
     '</tbody></table>'
 });
-shot(sMatrix, { d: 900, oy: -140, dur: 2600, dwell: 3200 });
-shot(sMatrix, { d: 1320, dur: 3000, dwell: 4600 });
-</script>
-
-<script>
-/* ================================================================
-   بوابة الحماية: أربع محطات تمرّ الكاميرا خلالها
-   ================================================================ */
-var CH3 = 'بوابة الحماية';
-
-function ring(z, label, sub, hot, i) {
-  var a = (-90 + i * 72) * Math.PI / 180;
-  var lx = Math.round(Math.cos(a) * 250), ly = Math.round(Math.sin(a) * 250);
-  return '<div class="st zoom" style="--i:' + i + ';position:absolute;left:50%;top:50%;' +
-         'width:640px;height:640px;margin:-320px 0 0 -320px;border-radius:50%;' +
-         'border:1px solid ' + (hot ? 'var(--cyan)' : 'var(--edge-hot)') + ';' +
-         'box-shadow:0 0 70px -18px rgba(63,210,236,' + (hot ? '.85' : '.45') + '), inset 0 0 90px -30px rgba(63,210,236,.55);' +
-         'background:radial-gradient(closest-side, rgba(10,40,54,.18), rgba(4,14,20,.05) 70%, transparent);' +
-         'text-align:center;transform:translate3d(0,0,' + z + 'px)">' +
-           '<div style="position:absolute;left:50%;top:50%;width:300px;' +
-                'transform:translate(-50%,-50%) translate(' + lx + 'px,' + ly + 'px)">' +
-             '<div style="font-family:\'IBM Plex Sans Arabic\',sans-serif;font-size:12px;color:var(--faint);margin-bottom:10px">' + sub + '</div>' +
-             '<div style="font-family:\'Readex Pro\',sans-serif;font-size:25px;color:' + (hot ? 'var(--cyan)' : 'var(--white)') + '">' + label + '</div>' +
-           '</div>' +
-         '</div>';
-}
-
-var sGuard = scene({
-  ch: CH3, w: 1400, h: 700, cls: 'bare', adv: 2100, turn: -22,
-  html:
-    '<div style="position:absolute;inset:0;transform-style:preserve-3d">' +
-      ring(0,     'يفتح الشاشة',        'الخطوة الأولى', false, 0) +
-      ring(-340,  'هل له جلسة أصلًا؟',  'الخطوة الثانية', false, 1) +
-      ring(-680,  'وهل هذه شاشته؟',     'الخطوة الثالثة', false, 2) +
-      ring(-1020, 'احذف ما لا يخصّه',   'الخطوة الرابعة', false, 3) +
-      ring(-1360, 'الآن أظهر الصفحة',   'وأخيرًا', true, 4) +
-    '</div>' +
-    '<div class="st" style="--i:5;position:absolute;left:50%;bottom:-50px;transform:translateX(-50%);text-align:center;width:940px">' +
-      '<p style="font-size:16px;color:var(--dim);line-height:1.85">هذه الخطوات الأربع تجري في أقل من جزء من الثانية، في كل مرة يفتح فيها أحدهم أي شاشة.<br>' +
-      'ولا تظهر الصفحة قبل أن تنتهي كلها، فلا يومض أمام المستخدم شيء ثم يختفي.</p></div>'
-});
-shot(sGuard, { d: 1900, dur: 3400, dwell: 4400 });
-shot(sGuard, { d: 620, oz: -700, dur: 4200, dwell: 3200 });
-shot(sGuard, { d: 520, oz: -1360, dur: 2600, dwell: 2800 });
-
-var sGuardWhy = scene({
-  ch: CH3, w: 1260, h: 460, adv: 1650, turn: 26,
-  html:
-    kick('ماذا يعني هذا عمليًا') +
-    '<h2 class="t sm st" style="--i:1">لو حاول أحدهم أن يتجاوز</h2>' +
-    '<div class="grid g3 st" style="--i:2;margin-top:26px">' +
-      '<div class="tile"><h3 style="font-size:17px">كتب العنوان يدويًا</h3><p>موظف الاستقبال يكتب عنوان صفحة التقارير في المتصفح. يعيده النظام إلى لوحته قبل أن يرى أي شيء.</p></div>' +
-      '<div class="tile"><h3 style="font-size:17px">فتح أدوات المتصفح</h3><p>يبحث عن التشخيص في شيفرة الصفحة. لا يجده، لأنه لم يُرسَل إليه من الأساس.</p></div>' +
-      '<div class="tile"><h3 style="font-size:17px">خرج ثم عاد</h3><p>ينتهي عمله ويضغط الخروج. تُمحى جلسته، ومن يفتح الجهاز بعده يبدأ من صفحة الدخول.</p></div>' +
-    '</div>'
-});
-shot(sGuardWhy, { d: 1180, dur: 2800, dwell: 5200 });
-
-/* ================================================================
-   كيف يتنقّل المستخدم داخل النظام
-   ================================================================ */
-var CH4 = 'خريطة التنقّل';
-
-var sNav = scene({
-  ch: CH4, w: 1420, h: 640, adv: 1900, turn: -24,
-  html:
-    kick('قبل أن ندخل الشاشات') +
-    '<h2 class="t sm st" style="--i:1;margin-bottom:8px">أين يذهب المستخدم حين يضغط</h2>' +
-    '<p class="lede st" style="--i:2;font-size:15.5px;margin-bottom:14px">لوحة التحكم هي نقطة الوصل. كل شاشة داخلية تُفتح منها، وكل خروج عن الصلاحية يعود إليها.</p>' +
-    '<svg class="diagram st" style="--i:3" viewBox="0 0 1300 430" role="img" aria-label="خريطة التنقّل بين صفحات النظام">' +
-      '<defs><marker id="ca" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3fd2ec"/></marker>' +
-      '<marker id="cb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#ff5d6a"/></marker></defs>' +
-      '<rect class="box" x="1110" y="30" width="170" height="58" rx="12"/><text class="lbl" x="1195" y="55" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="14">الموقع العام</text><text class="sub" x="1195" y="74">زائر، بلا دخول</text>' +
-      '<rect class="box" x="880" y="30" width="170" height="58" rx="12"/><text class="lbl" x="965" y="55" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="14">صفحة الدخول</text><text class="sub" x="965" y="74">خطوتان</text>' +
-      '<rect class="box hot" x="820" y="190" width="230" height="76" rx="14"/><text class="lbl" x="935" y="222" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="15">لوحة التحكم</text><text class="sub" x="935" y="244">نقطة الوصل للأدوار الثلاثة</text>' +
-      '<rect class="box" x="410" y="30" width="200" height="54" rx="12"/><text class="lbl" x="510" y="54" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="14">سجل المرضى</text><text class="sub" x="510" y="72">الأدوار الثلاثة</text>' +
-      '<rect class="box" x="410" y="110" width="200" height="54" rx="12"/><text class="lbl" x="510" y="134" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="14">المواعيد</text><text class="sub" x="510" y="152">الأدوار الثلاثة</text>' +
-      '<rect class="box" x="410" y="190" width="200" height="54" rx="12"/><text class="lbl" x="510" y="214" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="14">السجلات الحيوية</text><text class="sub" x="510" y="232">طبيب وممرضة</text>' +
-      '<rect class="box" x="410" y="270" width="200" height="54" rx="12"/><text class="lbl" x="510" y="294" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="14">التقارير</text><text class="sub" x="510" y="312">طبيب فقط</text>' +
-      '<rect class="box" x="90" y="350" width="240" height="58" rx="12"/><text class="lbl" x="210" y="376" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="14">ملف المريض</text><text class="sub" x="210" y="395">يفتح باسم المريض المحدّد</text>' +
-      '<path class="ar" style="--len:60;--d:300"   d="M1106 59 H1056" marker-end="url(#ca)"/>' +
-      '<path class="ar" style="--len:130;--d:900"  d="M918 88 V184" marker-end="url(#ca)"/>' +
-      '<path class="ar" style="--len:180;--d:1500" d="M730 228 H620" marker-end="url(#ca)"/>' +
-      '<path class="ar" style="--len:180;--d:1700" d="M730 228 V57 H616" marker-end="url(#ca)"/>' +
-      '<path class="ar" style="--len:180;--d:1900" d="M730 228 V137 H616" marker-end="url(#ca)"/>' +
-      '<path class="ar" style="--len:180;--d:2100" d="M730 228 V297 H616" marker-end="url(#ca)"/>' +
-      '<path class="ar" style="--len:60;--d:2100"  d="M816 228 H734"/>' +
-      '<path class="ar" style="--len:420;--d:2600" d="M406 57 H210 V344" marker-end="url(#ca)"/>' +
-      '<path class="ar" style="--len:260;--d:2900" d="M406 297 H320 V344" marker-end="url(#ca)"/>' +
-      '<path class="ar bad" style="--len:220;--d:3300" d="M990 186 V94" marker-end="url(#cb)" stroke-dasharray="7 5"/>' +
-      '<path class="ar bad" style="--len:520;--d:3600" d="M510 328 V400 H820 V270" marker-end="url(#cb)" stroke-dasharray="7 5"/>' +
-      '<text class="note" x="1085" y="20">زر «دخول الطاقم»</text>' +
-      '<text class="note" x="835" y="140">بعد اختيار الدور</text>' +
-      '<text class="note" x="700" y="352">من القائمة الجانبية</text>' +
-      '<text class="note" x="300" y="26">بالضغط على اسم مريض</text>' +
-      '<text class="note bad" x="1060" y="140">تسجيل الخروج</text>' +
-      '<text class="note bad" x="660" y="418">شاشة خارج الصلاحية، فيعود إلى اللوحة</text>' +
-    '</svg>'
-});
-shot(sNav, { d: 1240, dur: 3000, dwell: 6800 });
-shot(sNav, { d: 720, ox: 320, oy: -60, yaw: 8, dur: 2600, dwell: 3400 });
+shot(sMatrix, { d: 1320, dur: 3000, dwell: 6000 });
 </script>
 
 <script>
@@ -811,25 +633,23 @@ shot(sNav, { d: 720, ox: 320, oy: -60, yaw: 8, dur: 2600, dwell: 3400 });
    ================================================================ */
 var CH5 = 'جولة في الشاشات';
 
-/* شاشة واحدة: لمن هي، وماذا يستفيد منها، وماذا سيفعل فيها */
+/* شاشة واحدة: لمن هي، وماذا تفيد، ونقطتان أو ثلاث لا أكثر */
 function pageScene(cfg) {
   var does = cfg.does.map(function (d) { return '<li>' + d + '</li>'; }).join('');
   return scene({
-    ch: CH5, w: cfg.w || 1400, h: cfg.h || 660,
+    ch: CH5, w: cfg.w || 1400, h: cfg.h || 640,
     adv: cfg.adv, turn: cfg.turn,
     html:
       '<div class="row" style="align-items:center;height:100%">' +
-        '<div style="flex:.84">' +
+        '<div style="flex:.78">' +
           kick(cfg.kick) +
-          '<h2 class="t sm st" style="--i:1;font-size:36px">' + cfg.title + '</h2>' +
-          '<div class="chips st" style="--i:2;margin-top:12px">' +
-            '<span class="chip" style="font-family:\'IBM Plex Sans Arabic\',sans-serif;direction:rtl">لمن: ' + cfg.who + '</span></div>' +
-          '<p class="lede st" style="--i:2;font-size:16px;margin-top:14px">' + cfg.benefit + '</p>' +
-          '<div class="tile cy st" style="--i:3;margin-top:18px">' +
-            '<h3 style="font-size:17px">ماذا يفعل هنا</h3>' +
-            '<ul class="bul" style="margin-top:10px">' + does + '</ul></div>' +
+          '<h2 class="t sm st" style="--i:1;font-size:38px">' + cfg.title + '</h2>' +
+          '<div class="chips st" style="--i:2;margin-top:14px">' +
+            '<span class="chip" style="font-family:\'IBM Plex Sans Arabic\',sans-serif;direction:rtl">' + cfg.who + '</span></div>' +
+          '<p class="lede st" style="--i:2;font-size:17px;margin-top:16px">' + cfg.benefit + '</p>' +
+          '<ul class="bul st" style="--i:3;margin-top:20px">' + does + '</ul>' +
         '</div>' +
-        '<div style="flex:1.24">' +
+        '<div style="flex:1.3">' +
           clipBox(cfg.clip, cfg.bar) +
           (cfg.cap ? '<div class="cap st" style="--i:4;direction:rtl">' + cfg.cap + '</div>' : '') +
         '</div>' +
@@ -838,196 +658,144 @@ function pageScene(cfg) {
 }
 
 var sLand = pageScene({
-  adv: 2000, turn: 26,
+  adv: 2000, turn: -24,
   kick: 'الشاشة الأولى', title: 'الموقع التعريفي',
-  who: 'الزائر والمريض وأهله، قبل أي تسجيل دخول',
-  benefit: 'كثير من الناس يبحثون عن المستشفى قبل أن يتّصلوا به. هذه الصفحة تجيب عن أسئلتهم الأولى: ماذا تعالجون، وبأي أجهزة، ومن سيستقبلني حين أصل.',
+  who: 'للزائر والمريض، قبل أي دخول',
+  benefit: 'الوجه الذي يراه المريض قبل أن يأتي: ماذا نعالج، وبأي أجهزة، ومن سيستقبله.',
   does: [
-    'يتصفّح الخدمات والتقنيات، وكلها تُقرأ من ملف بيانات واحد يسهل تحديثه.',
-    'يشاهد جولة مصوّرة داخل القسم قبل أن يأتي إليه.',
-    'يتعرّف على الكادر الطبي، وهم أنفسهم من يدخلون النظام من الداخل.',
-    'إن كان موظفًا، يجد زر «دخول الطاقم» في أعلى الصفحة.'
+    'الخدمات والكادر يُقرآن من ملف بيانات، فتحديثهما لا يحتاج تعديل الصفحة.',
+    'زر «دخول الطاقم» في الأعلى هو الباب إلى النظام الداخلي.'
   ],
   clip: 'landing', bar: 'الصفحة الرئيسية',
   cap: 'الصفحة الوحيدة التي لا تحتاج تسجيل دخول'
 });
-shot(sLand, { d: 1330, dur: 3200, dwell: 12000 });
+shot(sLand, { d: 1330, dur: 3200, dwell: 11000 });
 
 var sLogin = pageScene({
-  adv: 1750, turn: -20,
+  adv: 1750, turn: 20,
   kick: 'الشاشة الثانية', title: 'الدخول واختيار الدور',
-  who: 'الطاقم فقط',
-  benefit: 'ضغطة واحدة هنا تحدّد شكل النظام كله بعدها. الثلاثة يذهبون إلى العنوان نفسه، لكن ما سيرونه فيه مختلف تمامًا.',
+  who: 'للطاقم فقط',
+  benefit: 'صفحة واحدة بخطوتين. والاختيار هنا هو الذي يحدّد شكل النظام كله بعده.',
   does: [
-    'يقرأ تعريفًا قصيرًا بالنظام، ثم يضغط «ابدأ».',
-    'يختار من هو: طبيب، أو ممرضة، أو موظف استقبال.',
-    'ينتقل مباشرة إلى لوحته، وقد بُنيت على أساس دوره.'
+    'تعريف قصير، ثم اختيار: طبيب أو ممرضة أو موظف استقبال.',
+    'الثلاثة يذهبون إلى العنوان نفسه، وما يرونه فيه مختلف.'
   ],
   clip: 'login', bar: 'صفحة الدخول',
   cap: 'من هذه النقرة يتفرّع النظام إلى ثلاثة'
 });
-shot(sLogin, { d: 1330, dur: 2900, dwell: 10000 });
+shot(sLogin, { d: 1330, dur: 2900, dwell: 9500 });
 
 var sDash = pageScene({
-  adv: 1750, turn: 18,
+  adv: 1750, turn: -18,
   kick: 'الشاشة الثالثة', title: 'لوحة التحكم',
-  who: 'الطبيب في هذه اللقطة',
-  benefit: 'هذه أول شاشة يفتحها في الصباح. يريد أن يعرف في نصف دقيقة: كم مريضًا عندي، ومن منهم حالته حرجة، ومن يحتاج مراجعة، وهل هناك موعد اليوم. يعرف كل ذلك دون أن يفتح ملفًا واحدًا.',
+  who: 'هنا بصلاحية الطبيب',
+  benefit: 'أول شاشة تُفتح في الصباح: كم مريضًا، ومن حالته حرجة، وهل هناك موعد اليوم — في نصف دقيقة وبلا فتح أي ملف.',
   does: [
-    'يقرأ الأرقام الملخّصة، وكلها محسوبة من بيانات اللحظة لا مكتوبة مسبقًا.',
-    'يضغط على اسم في قائمة «الحالات الحرجة» فينتقل إلى ملف ذلك المريض مباشرة.',
-    'يسجّل حالة رعاية، فيصل إشعارها إلى بقية الفريق فورًا.'
+    'الأرقام محسوبة لحظتها، لا مكتوبة مسبقًا.',
+    'كل اسم في «الحالات الحرجة» رابط يفتح ملف صاحبه.'
   ],
   clip: 'dashboard', bar: 'لوحة التحكم · طبيب',
   cap: 'الساعة في الأعلى حيّة وتتحدّث كل ثانية'
 });
-shot(sDash, { d: 1330, dur: 3000, dwell: 12000 });
-
-/* اللوحة نفسها بثلاثة أدوار */
-var sCmp = scene({
-  ch: CH5, w: 1600, h: 760, cls: 'bare', adv: 2000, turn: -22,
-  html:
-    '<div style="position:absolute;inset:0;transform-style:preserve-3d">' +
-      '<div class="st" style="--i:0;position:absolute;left:50%;top:50%;width:960px;margin:-400px 0 0 -480px;text-align:center">' +
-        '<h2 class="t sm">اللوحة نفسها، وثلاث شاشات لا تشبه إحداها الأخرى</h2>' +
-        '<p style="margin-top:12px;font-size:16px;color:var(--dim);line-height:1.8">هذه ثلاث لقطات للصفحة نفسها في اللحظة نفسها. الفارق الوحيد بينها هو من سجّل الدخول.</p></div>' +
-      '<div class="st zoom" style="--i:1;position:absolute;left:50%;top:50%;width:420px;margin:-235px 0 0 -210px;transform:translate3d(520px,0,-260px) rotateY(-24deg)">' +
-        screenBox('dashboard-doctor', 'طبيب', 560, true) + '<div class="cap" style="direction:rtl">الأطول. يرى كل شيء</div></div>' +
-      '<div class="st zoom" style="--i:2;position:absolute;left:50%;top:50%;width:420px;margin:-235px 0 0 -210px;transform:translate3d(0,0,0)">' +
-        screenBox('dashboard-nurse', 'ممرضة', 560, true) + '<div class="cap" style="direction:rtl">تسجيل ومتابعة، بلا قرار</div></div>' +
-      '<div class="st zoom" style="--i:3;position:absolute;left:50%;top:50%;width:420px;margin:-235px 0 0 -210px;transform:translate3d(-520px,0,-260px) rotateY(24deg)">' +
-        screenBox('dashboard-recep', 'موظف استقبال', 560, true) + '<div class="cap" style="direction:rtl">الأقصر. تسجيل وتنسيق فقط</div></div>' +
-    '</div>'
-});
-shot(sCmp, { d: 1980, dur: 3800, dwell: 5200 });
-shot(sCmp, { d: 1560, yaw: 26, pitch: 8, dur: 3600, dwell: 3800 });
+shot(sDash, { d: 1330, dur: 3000, dwell: 11000 });
 
 var sSearch = pageScene({
-  adv: 2000, turn: 24,
+  adv: 1900, turn: 22,
   kick: 'الشاشة الرابعة', title: 'سجل المرضى',
-  who: 'الأدوار الثلاثة، وكلٌّ يرى ما يخصّه',
-  benefit: 'حين يتّصل مريض ولا يذكر إلا اسمه، يجده الموظف في ثانيتين. وحين يريد الطبيب أن يرى الحالات الحرجة وحدها، تصفية واحدة تكفي.',
+  who: 'للأدوار الثلاثة، وكلٌّ يرى ما يخصّه',
+  benefit: 'حين يتّصل مريض ولا يذكر إلا اسمه، يجده الموظف في ثانيتين.',
   does: [
-    'يكتب جزءًا من الاسم، فتتقلّص القائمة أمامه وهو يكتب، بلا زر بحث وبلا انتظار.',
-    'يصفّي حسب الحالة ليرى الحرجة وحدها، أو من ينتظر التشخيص.',
-    'يضغط على أي صف فيفتح ملف المريض كاملًا.'
+    'القائمة تتقلّص مع كل حرف، بلا زر بحث وبلا انتظار.',
+    'وتصفية بالحالة تُظهر الحرجة وحدها.'
   ],
   clip: 'search', bar: 'سجل المرضى · طبيب',
   cap: 'عدد النتائج يتغيّر مع كل حرف'
 });
-shot(sSearch, { d: 1330, dur: 3000, dwell: 11000 });
-
-/* الفرق بالصلاحية */
-var sDiff = scene({
-  ch: CH5, w: 1520, h: 700, cls: 'bare', adv: 1900, turn: -20,
-  html:
-    '<div class="st" style="--i:0;text-align:center;margin-bottom:22px">' +
-      '<h2 class="t sm">الجدول نفسه، بعينين مختلفتين</h2>' +
-      '<p style="margin-top:10px;font-size:16px;color:var(--dim);max-width:78ch;margin-inline:auto;line-height:1.8">موظف الاستقبال يحتاج الاسم والعمر والهاتف ليؤكّد موعدًا، ولا يحتاج التشخيص. لذلك لا تُخفى عنه الأعمدة، بل لا تُرسَل إليه أصلًا. حتى ترويسة العمود غير موجودة، فلا يبقى فراغ يشي بوجود شيء محجوب.</p></div>' +
-    '<div class="row" style="gap:26px">' +
-      '<div class="st zoom" style="--i:1;flex:1">' + screenBox('patients-doctor', 'بعين الطبيب', 380, false) +
-        '<div class="cap" style="direction:rtl">التشخيص وفصيلة الدم والحالة ظاهرة</div></div>' +
-      '<div class="st zoom" style="--i:2;flex:1">' + screenBox('patients-recep', 'بعين الاستقبال', 380, false) +
-        '<div class="cap" style="direction:rtl">أعمدة أقل، ولا بيان سريري واحد</div></div>' +
-    '</div>'
-});
-shot(sDiff, { d: 1520, dur: 3200, dwell: 6400 });
+shot(sSearch, { d: 1330, dur: 3000, dwell: 10000 });
 
 var sFile = pageScene({
-  adv: 1800, turn: 22,
+  adv: 1800, turn: -20,
   kick: 'الشاشة الخامسة', title: 'ملف المريض',
-  who: 'الطبيب والممرضة',
-  benefit: 'بدل أن يجمع الطبيب المعلومة من ثلاثة أماكن، يجدها كلها في صفحة واحدة: من هو المريض، وكيف حاله الآن، وماذا كانت قراءاته، ومتى موعده القادم، وماذا كتب الفريق عنه.',
+  who: 'للطبيب والممرضة',
+  benefit: 'كل ما يخصّ مريضًا واحدًا في صفحة واحدة: بياناته، ومؤشراته، وقراءاته، ومواعيده، وملاحظات الفريق.',
   does: [
-    'يقرأ بيانات المريض ومؤشراته الحالية في أعلى الصفحة.',
-    'ينزل إلى سجل القراءات ليرى كيف تغيّرت حالته مع الوقت.',
-    'يراجع مواعيده وملاحظات الفريق عليه.',
-    'ينزّل كشفًا كاملًا بضغطة واحدة، ويعمل الكشف بلا إنترنت وبلا النظام.'
+    'زر واحد ينزّل كشفًا كاملًا يعمل بلا إنترنت.',
+    'وما لم يُسجَّل بعد يُكتب «غير محدد»، لا صفرًا.'
   ],
-  clip: 'file', bar: 'ملف المريض',
-  cap: 'ما لم يُسجَّل بعد يُكتب «غير محدد»، لا صفرًا'
+  clip: 'file', bar: 'ملف المريض'
 });
-shot(sFile, { d: 1330, dur: 3000, dwell: 11000 });
+shot(sFile, { d: 1330, dur: 3000, dwell: 10000 });
 
 var sAppt = pageScene({
-  adv: 1800, turn: -24,
+  adv: 1800, turn: 24,
   kick: 'الشاشة السادسة', title: 'المواعيد',
-  who: 'الأدوار الثلاثة، وأكثر من يستعملها الاستقبال',
-  benefit: 'القصة المهمة في هذه الشاشة ليست إضافة الموعد، بل رفضه. شاهد في المقطع: نحاول حجز موعد في تاريخ مضى، فيرفض النظام ويشرح السبب تحت الحقل نفسه قبل أن يُحفظ أي شيء. ثم نصحّح التاريخ فيُقبل.',
+  who: 'للأدوار الثلاثة',
+  benefit: 'القصة هنا ليست إضافة الموعد، بل رفضه. في المقطع نحجز موعدًا في تاريخ مضى، فيرفض النظام ويشرح السبب تحت الحقل نفسه قبل أن يُحفظ شيء. ثم نصحّح التاريخ فيُقبل.',
   does: [
-    'يختار المريض والتاريخ والوقت وسبب الزيارة.',
-    'إن كان الوقت خطأ، تظهر الرسالة فورًا مكان الخطأ لا في أعلى الصفحة.',
-    'مدة كل موعد ثلاثون دقيقة، فلا يُقبل موعد يتداخل مع آخر ولو باختلاف ربع ساعة.',
-    'الموعد العاجل القادم يصل جرس التنبيهات تلقائيًا.'
+    'مدة كل موعد ثلاثون دقيقة، فلا يُقبل موعد يتداخل مع آخر.',
+    'والموعد العاجل يصل جرس التنبيهات تلقائيًا.'
   ],
   clip: 'appointment', bar: 'المواعيد · موظف استقبال',
   cap: 'الرفض أولًا، ثم القبول بعد التصحيح'
 });
-shot(sAppt, { d: 1330, dur: 3000, dwell: 15000 });
+shot(sAppt, { d: 1330, dur: 3000, dwell: 14000 });
 
 var sVit = pageScene({
-  adv: 1800, turn: 20,
+  adv: 1800, turn: -20,
   kick: 'الشاشة السابعة', title: 'السجلات الحيوية',
-  who: 'الطبيب والممرضة فقط',
-  benefit: 'الممرضة تسجّل ما قاسته، والنظام هو من يقرّر إن كانت القراءة طبيعية أو تحتاج انتباهًا أو حرجة. هي لا تختار التصنيف، فلا مجال لاختلاف تقدير بين ممرضة وأخرى.',
+  who: 'للطبيب والممرضة فقط',
+  benefit: 'الممرضة تسجّل ما قاسته، والنظام هو من يقرّر إن كانت القراءة طبيعية أو حرجة. هي لا تختار التصنيف، فلا يختلف تقدير عن آخر.',
   does: [
-    'تختار المريض، وتكتب النبض والضغط ومستوى الأكسجين.',
-    'تحفظ، فتظهر القراءة في السجل ومعها تصنيفها ووقتها واسم من سجّلها.',
     'تعدّل ما سجّلته هي بنفسها، ولا تلمس قراءات زملائها.',
-    'الحذف للطبيب وحده.'
+    'والحذف للطبيب وحده.'
   ],
   clip: 'vitals', bar: 'السجلات الحيوية · ممرضة',
   cap: 'التصنيف نتيجة يحسبها النظام، لا خيارًا يُدخَل'
 });
-shot(sVit, { d: 1330, dur: 3000, dwell: 13000 });
+shot(sVit, { d: 1330, dur: 3000, dwell: 12000 });
 
 var sRep = pageScene({
-  adv: 1800, turn: -18,
+  adv: 1800, turn: 18,
   kick: 'الشاشة الثامنة', title: 'التقارير',
-  who: 'الطبيب وحده',
-  benefit: 'نظرة من فوق على القسم كله. كيف تتوزّع حالات المرضى، وما أكثر التشخيصات تكرارًا، وما متوسط المؤشرات، وكم موعدًا اكتمل وكم بقي.',
+  who: 'للطبيب وحده',
+  benefit: 'نظرة من فوق على القسم: كيف تتوزّع الحالات، وما أكثر التشخيصات، وما متوسط المؤشرات.',
   does: [
-    'يقرأ التوزيعات كنسب مرئية بدل أن يعدّها بنفسه.',
-    'يفتح تفاصيل أي مريض من جدول الملخّص دون أن يغادر الصفحة.',
-    'أرقام المواعيد هنا هي نفسها التي يراها في لوحة التحكم، فلا يختلف رقمان.'
+    'كل رقم محسوب، ولا رقم منها مكتوب باليد.',
+    'وتفاصيل أي مريض تُفتح دون مغادرة الصفحة.'
   ],
   clip: 'reports', bar: 'التقارير · طبيب',
   cap: 'الشاشة الوحيدة المحصورة بدور واحد'
 });
-shot(sRep, { d: 1330, dur: 3000, dwell: 11000 });
+shot(sRep, { d: 1330, dur: 3000, dwell: 10000 });
 
 var sNight = pageScene({
-  adv: 1800, turn: 22,
-  kick: 'تفصيل صغير يهمّ من يعمل ليلًا', title: 'الوضع الليلي',
-  who: 'الجميع',
-  benefit: 'المناوبة الليلية طويلة، والشاشة البيضاء متعبة للعين بعد ساعتين. ضغطة واحدة على أيقونة القمر تقلب النظام كله إلى ألوان داكنة، ويبقى الاختيار محفوظًا في المرة القادمة.',
+  adv: 1800, turn: -22,
+  kick: 'تفصيل صغير', title: 'الوضع الليلي',
+  who: 'للجميع',
+  benefit: 'المناوبة الليلية طويلة، والشاشة البيضاء متعبة. ضغطة واحدة تقلب النظام كله، ويبقى الاختيار محفوظًا.',
   does: [
-    'يضغط الأيقونة في أعلى الشاشة.',
-    'تتبدّل ألوان النظام كله، بما فيها الجداول والشارات والرسائل.',
-    'يعود إلى النهاري بالضغطة نفسها متى شاء.'
+    'تتبدّل الألوان كلها، بما فيها الجداول والشارات والرسائل.'
   ],
-  clip: 'night', bar: 'لوحة التحكم · تبديل الوضع',
-  cap: 'الاختيار يبقى محفوظًا للمرة القادمة'
+  clip: 'night', bar: 'لوحة التحكم · تبديل الوضع'
 });
-shot(sNight, { d: 1330, dur: 3000, dwell: 10000 });
+shot(sNight, { d: 1330, dur: 3000, dwell: 9000 });
 
 var sResp = scene({
-  ch: CH5, w: 1500, h: 780, cls: 'bare', adv: 1900, turn: -20,
+  ch: CH5, w: 1500, h: 780, cls: 'bare', adv: 1900, turn: 20,
   html:
     '<div style="position:absolute;inset:0;transform-style:preserve-3d">' +
       '<div class="st" style="--i:0;position:absolute;left:50%;top:50%;width:940px;margin:-350px 0 0 -470px;text-align:center">' +
         '<h2 class="t sm">وعلى الهاتف</h2>' +
-        '<p style="margin-top:12px;font-size:16px;color:var(--dim);line-height:1.8">الممرضة لا تحمل حاسوبًا في الجولة. على الشاشة الصغيرة يتحوّل الجدول إلى بطاقات، ويصير الشريط الجانبي درجًا يُفتح عند الحاجة. ليس تصغيرًا للعرض، بل ترتيبًا آخر له.</p></div>' +
+        '<p style="margin-top:12px;font-size:16.5px;color:var(--dim);line-height:1.8">الممرضة لا تحمل حاسوبًا في الجولة. على الشاشة الصغيرة يتحوّل الجدول إلى بطاقات، ويصير الشريط الجانبي درجًا.</p></div>' +
       '<div class="st zoom" style="--i:1;position:absolute;left:50%;top:50%;width:300px;margin:-230px 0 0 -150px;transform:translate3d(470px,0,-220px) rotateY(-26deg)">' +
-        screenBox('patients-mobile', 'سجل المرضى', 460, false) + '<div class="cap" style="direction:rtl">كل مريض بطاقة</div></div>' +
+        screenBox('patients-mobile', 'سجل المرضى', 460, false) + '</div>' +
       '<div class="st zoom" style="--i:2;position:absolute;left:50%;top:50%;width:300px;margin:-230px 0 0 -150px;transform:translate3d(0,0,20px)">' +
-        screenBox('dashboard-mobile', 'لوحة التحكم', 460, false) + '<div class="cap" style="direction:rtl">البطاقات تتراصّ عموديًا</div></div>' +
+        screenBox('dashboard-mobile', 'لوحة التحكم', 460, false) + '</div>' +
       '<div class="st zoom" style="--i:3;position:absolute;left:50%;top:50%;width:300px;margin:-230px 0 0 -150px;transform:translate3d(-470px,0,-220px) rotateY(26deg)">' +
-        screenBox('appointments-mobile', 'المواعيد', 460, false) + '<div class="cap" style="direction:rtl">النموذج عمود واحد</div></div>' +
+        screenBox('appointments-mobile', 'المواعيد', 460, false) + '</div>' +
     '</div>'
 });
-shot(sResp, { d: 1720, dur: 3400, dwell: 5000 });
-shot(sResp, { d: 1300, yaw: -24, pitch: 6, dur: 3400, dwell: 3600 });
+shot(sResp, { d: 1720, dur: 3400, dwell: 5200 });
 </script>
 
 <script>
@@ -1036,70 +804,14 @@ shot(sResp, { d: 1300, yaw: -24, pitch: 6, dur: 3400, dwell: 3600 });
    ================================================================ */
 var CH6 = 'القواعد';
 
-var sFour = scene({
-  ch: CH6, w: 1420, h: 560, adv: 2000, turn: 24,
-  html:
-    kick('قواعد المواعيد') +
-    '<h2 class="t sm st" style="--i:1">أربع مرات يُسأل فيها الموعد قبل أن يُحفظ</h2>' +
-    '<p class="lede st" style="--i:2;font-size:16px;margin-top:10px">الأولى إرشاد لطيف، والثانية تشرح الخطأ، والثالثة تتحقّق من الواقع لحظة الحفظ، والرابعة ترفض رفضًا لا يُتجاوز. ولو حاول أحدهم استدعاء الحفظ من أدوات المتصفح مباشرة، ترفضه الطبقة الرابعة أيضًا.</p>' +
-    '<svg class="diagram st" style="--i:3;margin-top:20px" viewBox="0 0 1280 300" role="img" aria-label="أربع طبقات تحقّق للموعد">' +
-      '<defs><marker id="cf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3fd2ec"/></marker>' +
-      '<marker id="cg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#ff5d6a"/></marker></defs>' +
-      '<rect class="box" x="1000" y="40" width="260" height="92" rx="12"/><text class="lbl" x="1130" y="76" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="15">١ · الحقل نفسه</text><text class="sub" x="1130" y="102">يمنع اختيار تاريخ مضى</text>' +
-      '<rect class="box" x="690" y="40" width="260" height="92" rx="12"/><text class="lbl" x="820" y="76" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="15">٢ · النموذج</text><text class="sub" x="820" y="102">يكتب سبب الرفض تحت الحقل</text>' +
-      '<rect class="box" x="380" y="40" width="260" height="92" rx="12"/><text class="lbl" x="510" y="76" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="15">٣ · قبل الحفظ</text><text class="sub" x="510" y="102">يعيد قراءة المواعيد الآن</text>' +
-      '<rect class="box hot" x="70" y="40" width="260" height="92" rx="12"/><text class="lbl" x="200" y="76" font-family="\'IBM Plex Sans Arabic\',sans-serif" font-size="15">٤ · لحظة الكتابة</text><text class="sub" x="200" y="102">رفض نهائي، بلا واجهة</text>' +
-      '<path class="ar" style="--len:60;--d:300"  d="M996 86 H954" marker-end="url(#cf)"/>' +
-      '<path class="ar" style="--len:60;--d:800"  d="M686 86 H644" marker-end="url(#cf)"/>' +
-      '<path class="ar" style="--len:60;--d:1300" d="M376 86 H334" marker-end="url(#cf)"/>' +
-      '<path class="ar bad" style="--len:420;--d:1800" d="M820 136 V196 H1130 V136" marker-end="url(#cg)" stroke-dasharray="6 5"/>' +
-      '<path class="ar bad" style="--len:700;--d:2200" d="M510 136 V228 H1130" marker-end="url(#cg)" stroke-dasharray="6 5"/>' +
-      '<path class="ar bad" style="--len:1000;--d:2600" d="M200 136 V262 H1130" marker-end="url(#cg)" stroke-dasharray="6 5"/>' +
-      '<text class="note bad" x="965" y="190">يعود ولا يُحفظ</text>' +
-      '<text class="note bad" x="800" y="222">يعود ولا يُحفظ</text>' +
-      '<text class="note bad" x="640" y="256">يعود ولا يُحفظ</text>' +
-      '<text class="note" x="1130" y="26">يمكن تجاوزها بأدوات المتصفح</text>' +
-      '<text class="note" x="200" y="26">لا يمكن تجاوزها</text>' +
-    '</svg>'
-});
-shot(sFour, { d: 1330, dur: 3200, dwell: 7000 });
-
-var sConf = scene({
-  ch: CH6, w: 1360, h: 520, adv: 1750, turn: -22,
-  html:
-    '<div class="row" style="align-items:center;height:100%;gap:30px">' +
-      '<div style="flex:.9">' +
-        kick('قاعدة التعارض') +
-        '<h2 class="t sm st" style="--i:1">لماذا يُرفض موعد العاشرة والربع</h2>' +
-        '<p class="lede st" style="--i:2;font-size:15.5px;margin-top:10px">مدة كل موعد ثلاثون دقيقة. لو اكتفينا بمقارنة أوقات البداية، لمرّ موعد العاشرة والربع بينما العاشرة محجوزة، ولوجد المريضان نفسيهما في العيادة معًا.</p>' +
-        '<ul class="bul st" style="--i:3;margin-top:16px">' +
-          '<li>لا موعد في وقت مضى، بالدقيقة لا باليوم.</li>' +
-          '<li>لا موعدان متداخلان <b>لنفس المريض</b>.</li>' +
-          '<li>ولا موعدان في الفترة نفسها <b>لنفس الطبيب</b>.</li>' +
-        '</ul>' +
-      '</div>' +
-      '<svg class="diagram st fromR" style="--i:2;flex:1.1" viewBox="0 0 700 320" role="img" aria-label="خط زمني يوضح تداخل موعدين">' +
-        '<g class="sub"><text x="640" y="24">10:00</text><text x="500" y="24">10:15</text><text x="360" y="24">10:30</text><text x="220" y="24">10:45</text><text x="80" y="24">11:00</text></g>' +
-        '<g stroke="rgba(63,210,236,.16)" stroke-width="1">' +
-          '<line x1="640" y1="36" x2="640" y2="300"/><line x1="500" y1="36" x2="500" y2="300"/><line x1="360" y1="36" x2="360" y2="300"/><line x1="220" y1="36" x2="220" y2="300"/><line x1="80" y1="36" x2="80" y2="300"/></g>' +
-        '<rect class="box hot" x="360" y="60" width="280" height="52" rx="10"/><text class="lbl" x="500" y="84" font-family="\'IBM Plex Sans Arabic\',sans-serif">موعد قائم لسارة</text><text class="sub" x="500" y="102">من العاشرة إلى العاشرة والنصف</text>' +
-        '<rect class="box bad" x="220" y="140" width="280" height="52" rx="10"/><text class="lbl" x="360" y="164" fill="#ff5d6a" font-family="\'IBM Plex Sans Arabic\',sans-serif">محاولة حجز مرفوضة</text><text class="sub" x="360" y="182">من العاشرة والربع</text>' +
-        '<rect x="360" y="140" width="140" height="52" fill="#ff5d6a" opacity=".2"/>' +
-        '<text class="note bad" x="430" y="214">ربع ساعة متداخلة تكفي للرفض</text>' +
-        '<rect class="box" x="80" y="240" width="280" height="52" rx="10"/><text class="lbl" x="220" y="264" font-family="\'IBM Plex Sans Arabic\',sans-serif">حجز مقبول</text><text class="sub" x="220" y="282">من العاشرة والنصف</text>' +
-      '</svg>' +
-    '</div>'
-});
-shot(sConf, { d: 1300, dur: 3000, dwell: 6600 });
-
 var sLimits = scene({
-  ch: CH6, w: 1340, h: 560, adv: 1700, turn: 20,
+  ch: CH6, w: 1340, h: 560, adv: 1900, turn: -22,
   html:
     kick('قواعد القراءات') +
     '<h2 class="t sm st" style="--i:1">حدود تحمي البيانات، لا تشخّص المريض</h2>' +
     '<p class="lede st" style="--i:2;font-size:16px;margin-top:10px">هذه الحدود موجودة لتمنع الخطأ الكتابي: نبض ١٢٠٠ بدل ١٢٠، أو أكسجين ٩٠٠ بدل ٩٠. هي لا تحكم على حال المريض، ذلك عمل الطبيب.</p>' +
     '<div class="grid g4 st" style="--i:3;margin-top:22px">' +
-      '<div class="tile"><div class="lbl" style="margin:0 0 6px">النبض</div><div class="num" style="font-size:30px">20 – 220</div><div class="lbl">نبضة في الدقيقة</div></div>' +
+      '<div class="tile"><div class="lbl" style="margin:0 0 6px">النبض</div><div class="num" style="font-size:30px">40 – 220</div><div class="lbl">نبضة في الدقيقة</div></div>' +
       '<div class="tile"><div class="lbl" style="margin:0 0 6px">الضغط الانقباضي</div><div class="num" style="font-size:30px">50 – 260</div><div class="lbl">ولا بد أن يكون أعلى من الانبساطي</div></div>' +
       '<div class="tile"><div class="lbl" style="margin:0 0 6px">الضغط الانبساطي</div><div class="num" style="font-size:30px">30 – 160</div><div class="lbl">يُكتبان معًا في حقل واحد</div></div>' +
       '<div class="tile"><div class="lbl" style="margin:0 0 6px">الأكسجين</div><div class="num" style="font-size:30px">60 – 100</div><div class="lbl">بالمئة</div></div>' +
@@ -1116,50 +828,10 @@ shot(sLimits, { d: 1330, dur: 3000, dwell: 6600 });
 /* ================================================================
    تحت الغطاء
    ================================================================ */
-var CH7 = 'تحت الغطاء';
-
-function slab(y, name, sub, chips, i) {
-  return '<div class="slab st zoom" style="--i:' + i + ';transform:translate3d(0,' + y + 'px,0) rotateX(50deg)">' +
-           '<div class="name">' + name + '<small>' + sub + '</small></div>' +
-           '<div class="chips">' + chips + '</div>' +
-         '</div>';
-}
-
-var sLayers = scene({
-  ch: CH7, w: 1400, h: 800, cls: 'bare', adv: 2200, turn: -26,
-  html:
-    '<div style="position:absolute;inset:0;transform-style:preserve-3d">' +
-      slab(-460, 'الصفحات',        'ما يراه المستخدم',        chipset(['الرئيسية', 'الدخول', 'اللوحة', 'المرضى', 'ملف المريض', 'المواعيد', 'القراءات', 'التقارير']), 0) +
-      slab(-230, 'وحدة لكل شاشة',  'تملأ الشاشة وتربط أزرارها', chipset(['ثماني وحدات، واحدة لكل صفحة']), 1) +
-      slab(0,    'ما تشترك فيه',   'يُكتب مرة ويخدم الجميع',   chipset(['الهيكل والقائمة', 'الشارات والرسائل', 'لوحة التعديل', 'كشف المريض', 'الوضع الليلي']), 2) +
-      slab(230,  'القواعد',        'الحدود والتحقّق',          chipset(['حدود القراءات', 'قواعد المواعيد']), 3) +
-      slab(460,  'البيانات',       'قراءة وكتابة',             chipset(['كل قراءة من هنا', 'وكل كتابة من هنا']), 4) +
-    '</div>'
-});
-shot(sLayers, { d: 2350, pitch: 36, dur: 3600, dwell: 4200 });
-shot(sLayers, { d: 1500, yaw: 16, pitch: 40, oy: -300, dur: 4200, dwell: 3600 });
-
-var sHow = scene({
-  ch: CH7, w: 1340, h: 540, adv: 1800, turn: 28,
-  html:
-    kick('كيف رُتّب من الداخل') +
-    '<h2 class="t sm st" style="--i:1">القاعدة تُكتب مرة واحدة، وتسري على كل مكان</h2>' +
-    '<p class="lede st" style="--i:2;font-size:16.5px;margin-top:12px">قسّمنا النظام إلى طبقات، لكل واحدة مهمة واحدة: الصفحة تعرض، والقواعد تتحقّق، والبيانات تُقرأ وتُكتب من مكان واحد. والفائدة عملية لا نظرية: حين أردنا تعديل حدّ النبض المسموح، عدّلناه في موضع واحد فانعكس على الحقل وعلى رسالة الخطأ وعلى الكشف المنزَّل معًا.</p>' +
-    '<div class="grid g3 st" style="--i:3;margin-top:26px">' +
-      '<div class="tile cy"><h3 style="font-size:17px">أين تعيش البيانات</h3><p>بيانات أصلية ثابتة لا يكتب فيها النظام أبدًا، وما يضيفه الطاقم يُحفظ في متصفح الجهاز. والشاشات ترى قائمة واحدة ولا تعرف الفرق بينهما.</p></div>' +
-      '<div class="tile"><h3 style="font-size:17px">ولماذا هذا مهم</h3><p>لأن إضافة شيء جديد لاحقًا لا تكسر ما قبله. الوضع الليلي أُضيف كاملًا دون تعديل صفحة واحدة.</p></div>' +
-      '<div class="tile"><h3 style="font-size:17px">ولإعادة كل شيء كما كان</h3><p>يكفي مسح بيانات الموقع من المتصفح، فتعود البيانات الأصلية سليمة لأن النظام لم يكتب فيها.</p></div>' +
-    '</div>'
-});
-shot(sHow, { d: 1240, dur: 3000, dwell: 6400 });
-
-/* ================================================================
-   الخلاصة
-   ================================================================ */
-var CH8 = 'الخلاصة';
+var CH7 = 'الخلاصة';
 
 var sBuilt = scene({
-  ch: CH8, w: 1360, h: 560, adv: 1750, turn: -24,
+  ch: CH7, w: 1360, h: 560, adv: 1800, turn: 24,
   html:
     kick('بمَ بُني، وأين حدوده') +
     '<h2 class="t sm st" style="--i:1">أدوات بسيطة، وحدود معلنة لا مخفيّة</h2>' +
@@ -1178,7 +850,7 @@ var sBuilt = scene({
 shot(sBuilt, { d: 1310, dur: 2900, dwell: 6600 });
 
 var sWall = scene({
-  ch: CH8, w: 1600, h: 900, cls: 'bare', adv: 2100, turn: 22,
+  ch: CH7, w: 1600, h: 900, cls: 'bare', adv: 2100, turn: 22,
   html:
     '<div style="position:absolute;inset:0;transform-style:preserve-3d">' +
       (function () {
@@ -1203,7 +875,7 @@ shot(sWall, { d: 1850, dur: 4200, dwell: 3600 });
 shot(sWall, { d: 3100, pitch: 14, dur: 4200, dwell: 3200 });
 
 var sEnd = scene({
-  ch: CH8, w: 1400, h: 640, cls: 'bare', adv: 2200, turn: -20,
+  ch: CH7, w: 1400, h: 640, cls: 'bare', adv: 2200, turn: -20,
   html:
     '<div style="text-align:center">' +
       '<svg class="ecg st" style="--i:0;opacity:.55;margin-bottom:40px" viewBox="0 0 1600 300" preserveAspectRatio="none" height="120" role="img" aria-label="خط نبض"><path d="' + ECG_PATH + '"/></svg>' +
